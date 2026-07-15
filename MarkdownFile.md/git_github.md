@@ -17,8 +17,8 @@
 `git remote -v`
 > 这条命令可以查看当前绑定的远程地址
 
-`git remote add origin`+要绑定的地址
+`git remote add origin`+==要绑定的地址==
 > 重新绑定正确的 study 仓库地址
 
-==example==
+==要绑定的地址==
 ![alt text](image-5.png)
