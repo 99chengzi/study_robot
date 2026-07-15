@@ -128,3 +128,20 @@ else:
     print("此BMI值属于肥胖范围")
 ```
 > python中可以正常用数学公式的写法来写：==18.5<user_BMI<=25==
+## 七. 逻辑运算
+and 与 
+or 或  
+not 非
+> 优先级 not>and>or
+## 八. 列表
+#### 1.方法：对象.方法名()
+==ex.==  shopping_list.append("显示器")
+#### 2.函数：函数名(对象)
+==ex.==  len(shopping_list)
+```
+num_list = [1, 13, -7, 2, 96]
+print(max(num_list))# 打印列表里的最大值
+print(min(num_list))# 打印列表里的最小值
+print(sorted (num_list))# 打印排序好的列表
+```
+
