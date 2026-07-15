@@ -11,4 +11,14 @@
 # 二. 前期准备
 #### 下载VS code、git
 #### 注册github账号并创建一个仓库
-......
+`git remote remove origin`
+> 这条命令可以删除错误的远程绑定
+
+`git remote -v`
+> 这条命令可以查看当前绑定的远程地址
+
+`git remote add origin`+要绑定的地址
+> 重新绑定正确的 study 仓库地址
+
+==example==
+![alt text](image-5.png)
