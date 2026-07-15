@@ -136,6 +136,10 @@ not 非
 ## 八. 列表
 #### 1.方法：对象.方法名()
 ==ex.==  shopping_list.append("显示器")
+##### 添加操作：shopping_list.append("键盘")   
+*append只能加在末尾*
+##### 删除操作：shopping_list.remove("键帽")
+##### 索引操作：shopping_list[0]
 #### 2.函数：函数名(对象)
 ==ex.==  len(shopping_list)
 ```
@@ -144,4 +148,28 @@ print(max(num_list))# 打印列表里的最大值
 print(min(num_list))# 打印列表里的最小值
 print(sorted (num_list))# 打印排序好的列表
 ```
+## 九. 字典
+1.结构：键值对 {key: value}
+2.键 key 要求：必须不可变类型
+3.值 value：任意类型
+> **辨析**：==列表==example_list=["键盘","键帽"] ==方括号==
+ ==元组==example_tuple=("键盘","键帽")==圆括号==
 
+> 可变类型：dict(字典),list(列表),set(集合)
+> 不可变类型：int,float,bool,str,tuple(元组),complex(复数)
+
+4.特点：
+键唯一，重复赋值会覆盖旧值
+通过键取值，不是下标索引
+##### 添加：d["a"] = 99
+##### 删除：del d["a"]
+> ==example==
+```
+query= input("请输入您想要查询的流行语:")
+if query in slang_dict:
+    print("您查询的”+query+"含义如下")
+    print(slang_dict[query])
+else
+    print("您查询的流行语暂未收录。")
+    print("当前本词典收录词条数为:"+str(len(slang_dict))+"条。")
+```
