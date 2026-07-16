@@ -57,5 +57,9 @@ git commit -m "添加忽略规则，屏蔽text文件夹"
 git add .gitignore
 git commit -m "补充忽略规则，屏蔽text目录"
 ```
+
+5. 补充：保留.gitignore 文件，但不提交它（仅本地用）
+`git update-index --assume-unchanged .gitignore`
+之后 .gitignore 文件会一直留在本地，但 Git 不会识别它为待提交文件，push 时不会上传到 GitHub
 ##### 最终效果:
 提交完成后，VS Code 左侧源代码管理就不会再弹出 text 文件夹的 U 标记，以后在 text 里新建 / 修改任何文件，Git 都会自动无视，不会干扰你上传笔记到 GitHub。
