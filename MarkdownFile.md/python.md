@@ -161,6 +161,9 @@ print(sorted (num_list))# 打印排序好的列表
 4.特点：
 键唯一，重复赋值会覆盖旧值
 通过键取值，不是下标索引
+##### 字典名.keys() #返回所有键
+##### 字典名.values() #返回所有值
+##### 字典名.items() #返回所有键值对
 ##### 添加：d["a"] = 99
 ##### 删除：del d["a"]
 > ==example==
@@ -172,4 +175,17 @@ if query in slang_dict:
 else
     print("您查询的流行语暂未收录。")
     print("当前本词典收录词条数为:"+str(len(slang_dict))+"条。")
+```
+## 十. for循环
+> for 变量名 in 可迭代的对象：
+
+##### for循环结合range的作用
+range用来表示整数序列，括号里面第一个数字用来表示起始值，最后一个数字表示结束值，但结束值不在序列范围内。
+![alt text](image-6.png)
+> 步长不指明时默认为1
+```
+total=0
+for i in range(1,101):
+    total = total+i
+print(total)
 ```
