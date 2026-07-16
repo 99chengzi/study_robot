@@ -9,11 +9,12 @@
 + Python 中 "+" 对字符串的作用是字符串拼接，只会把文本直接连在一起，不会自动添加空格。
 `print("你好"+"这是一句代码"+"哈哈")`
    > 你好这是一句代码哈哈
++ n//2(两个//)是向下取整的意思
 + 如果字符串用单引号包起来，想在字符串内写一个单引号，就要用反斜杠\转义，写成\'
   `print("I\'m student!")`
   >I'm student!
 + 字母全部小写，不同单词用下划线分隔
-  >==下划线命名法==
+  >==下划线命名法==(定义普通变量时)
   > user_name  user_age
 ## 二. 数学运算
 + 计算2的三次方 
@@ -39,6 +40,28 @@
    1. len('\n')字符串长度==1==
    2. 索引"lucky"[3]得到"k"
    + 索引是从0开始的
+   3. python格式化字符串：
+**format 方法：**
+```
+message_content="""
+律回春渐，新元肇启。
+新岁甫至，福气东来。
+金{0}贺岁，欢乐祥瑞。
+金{0}敲门，五福临门。
+给{1}及家人拜年啦!
+新春快乐，{0}年大吉!
+""".format(year,name)
+```
+> {0}表示format括号里第一个参数，{1}表示format括号里第二个参数
+> format打印时不需要手动转换成字符串
+
+**f-string 最简写法:**
+```
+print(f"小猫{cat1.name}的年龄是{cat1.age}岁，花色是{cat1.color}")
+```
+字符串前加 f，大括号 {} 里直接写变量，自动识别数字、字符串，不用转换。
+> {gpa:.2f}可以保留两位小数
+==：.2f==
 ### 2.整数int 浮点数float
 ### 3.布尔类型bool
 + ==T==rue 和 ==F==alse首字母必须严格大写
@@ -183,9 +206,149 @@ else
 range用来表示整数序列，括号里面第一个数字用来表示起始值，最后一个数字表示结束值，但结束值不在序列范围内。
 ![alt text](image-6.png)
 > 步长不指明时默认为1
+
+> range里面只放一个值时默认初始值为0
 ```
 total=0
 for i in range(1,101):
     total = total+i
 print(total)
 ```
+## 十一. while循环
+> while 条件A：
+       行动B   
+
+在条件合适结束未知的情况下，while循环比for循环更适合使用
+```
+# measure_brightness函数返回当前测量的天空亮度
+while measure_brightness() >= 500:
+#拍照片
+    take_photo()
+```
+> ==example==
+```
+list_1 =["你","好","吗","兄","弟",]
+for char in list_1:
+    print(char)
+```
+```
+for i in range(len(list_1)):
+    print(list_1[i])
+```
+```
+i=0
+while i<len(list_1):
+    print(list_1[i])
+    i+=1
+```
+## 十二. python函数
+#### 1.定义：
+```
+def calculate_sector():
+#接下来是一些定义函数的代码
+#...
+```
+```
+def calculate_sector(central_angle, radius):
+    sector_area = central_angle / 360 * 3.14 * radius** 2
+    print(f"此扇形面积为:{sector_area}")
+
+calculate_sector(160, 30)
+calculate_sector(60, 15)
+calculate_sector(30, 16)
+```
+## 十三. 引入模块
+1. import语句
+ ```
+   import statistics
+   print(statistics.median([19, -5, 36]))
+   print(statistics.mean([19,-5, 36]))
+   ```
+   > import后面跟的是模块名
+
+2. from ... import ... 语句
+ ```
+from statistics import median, mean
+print(median([19,-5, 36]))# 输出中间值
+print(mean([19,-5,36]))# 输出平均值
+   ```
+> from后面跟模块名，import后面跟在模块里要使用的函数和变量
+3. from ... import *语句
+```
+from statistics import *
+print(median([19,-5, 36]))
+print(mean([19,-5,36]))
+```
+> 可能会出现歧义，不推荐
+## 十四. 面向对象编程(OOP)
+> ==概念辨析==
+> 面向过程(POP):以「步骤 / 函数」为中心，关注「怎么做」
+> 面向对象(OOP):以「事物 / 对象」为中心，关注「谁来做」
+
+<u>类和对象之间的关系：</u>
+类是创建对象的模板，对象是类的实例
+<u>可以与对象绑定的有：</u>
+属性、方法  
+
+> 属性是放在类里面的变量
+> 方法是放在类里面的函数
+#### 三个概念：
+**封装**：把数据和对数据的操作绑在一起，并隐藏内部细节。
+> 你用手机拍照，只需要点"拍照"按钮，不需要知道镜头如何对焦、传感器如何工作。手机把复杂细节封装了。
+
+**继承**：在已有基础上"扩展"，子类自动拥有父类的属性和方法，还能添加新功能或修改行为。
+> "狗"是一种"动物"。动物会吃、会睡，狗除了这些还会汪汪叫。狗继承了动物的特征，并增加了自己的特点。
+> 
+**多态**：不同对象调用同名方法，会执行各自独有的逻辑。
+> 妈妈让两个孩子写作业，大学生和小学生都要完成写作业这个任务，但是大学生和小学生写作业的方式不同会各自执行
+#### 一些语法：
+`class NameOfClass:
+#接下来是一些定义类的代码`
+> ==Pascal命名法==(定义类名的时候)
+用首字母大写来分隔单词
+```
+class CuteCat:
+    def_init_(self):
+        #接下来是一些构造函数的代码
+```
+self不需要我们手动传入
+`cat1= CuteCat()# 调用CuteCat()创建对象`
+
+```
+class CuteCat:
+    def speak(self)
+        #接下来是一些定义方法的代码
+```
+> ==example==
+```
+# 1. 先定义类，所有方法统一缩进在class内部
+class CuteCat:
+    def __init__(self, cat_name, cat_age, cat_color):
+        self.name = cat_name
+        self.age = cat_age
+        self.color = cat_color
+
+    # 和__init__同级缩进，属于类的方法(__init__前后是两个短下划线)
+    def speak(self):
+        print("喵" * self.age)
+
+    # 和__init__同级缩进，属于类的方法  
+    def think(self, content):
+        print(f"小猫{self.name}在思考{content}")
+
+# 2. 类定义结束后，再实例化创建对象cat1（无缩进）
+cat1 = CuteCat("Jojo", 2, "橙色")
+
+# 3. 实例创建完成后，再打印、调用方法
+print(f"小猫{cat1.name}的年龄是{cat1.age}岁，花色是{cat1.color}")
+cat1.speak()
+cat1.think("现在去抓沙发还是撕纸箱")
+```
+![alt text](image-8.png)
+**什么时候用继承？**
+
+| A是B | classA(B) |
+| :--: | :--: |
+|人类是动物|class Human(Animal)|
+|新能源车是车|class ElectricCar(Car)|
+> 在子类下面用super().会返回当前子类的父类
