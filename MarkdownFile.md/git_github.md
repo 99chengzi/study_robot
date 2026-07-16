@@ -29,3 +29,33 @@
 > 新增内容：feat: 新增git远程管理笔记
 修改完善：docs: 完善github绑定、推送步骤
 修正错误：fix: 修正git add命令写法错误
+
+#### 解决新建文件自动显示 U（未追踪）、不想提交的问题(不删原文件的情况):
+1. 在项目根目录新建 .gitignore 文件
+在左侧资源管理器空白处右键 → 新建文件，文件名直接输入：
+.gitignore
+![alt text](image-7.png)
+> 注意：文件名前面必须带小数点，不能少。
+2. 打开 .gitignore，写入忽略规则
+你现在不想管整个 text 文件夹，直接写：
+```
+# 忽略整个text文件夹
+text/
+```
+如果只想忽略里面单个文件 cyj.py，就写：
+```
+text/cyj.py
+```
+写完按 Ctrl+S 保存。
+3. 执行：
+```
+git add .gitignore
+git commit -m "添加忽略规则，屏蔽text文件夹"
+```
+4. 终端执行提交更新
+```
+git add .gitignore
+git commit -m "补充忽略规则，屏蔽text目录"
+```
+##### 最终效果:
+提交完成后，VS Code 左侧源代码管理就不会再弹出 text 文件夹的 U 标记，以后在 text 里新建 / 修改任何文件，Git 都会自动无视，不会干扰你上传笔记到 GitHub。
