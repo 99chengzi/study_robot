@@ -11,6 +11,8 @@
 # 二. 前期准备
 #### 下载VS code、git
 #### 注册github账号并创建一个仓库
+##### 若打开github遇网络问题可使用==Watt Toolkit Installer==进行网络加速
+# 三. 一些注意事项
 `git remote remove origin`
 > 这条命令可以删除错误的远程绑定
 
@@ -22,3 +24,8 @@
 
 ==要绑定的地址==
 ![alt text](image-5.png)
+==每次更改后要ctrl+s(保存)才能上传到github==
+#### 更改处的提交信息输入框可以这么填：
+> 新增内容：feat: 新增git远程管理笔记
+修改完善：docs: 完善github绑定、推送步骤
+修正错误：fix: 修正git add命令写法错误
