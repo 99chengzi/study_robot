@@ -352,3 +352,75 @@ cat1.think("现在去抓沙发还是撕纸箱")
 |人类是动物|class Human(Animal)|
 |新能源车是车|class ElectricCar(Car)|
 > 在子类下面用super().会返回当前子类的父类
+## 十五. 文件
+### 1.文件路径
+#### （1）绝对路径
+从根目录开始写完整、唯一的路径，定位文件不需要依托当前所在文件夹，任何场景下都能精准找到文件。
+==Windows 示例==
+
+C:\Users\test\document\demo.txt
+D:\code\main.py
+
+==Linux / MacOS 示例==
+
+/home/user/file.txt
+/var/log/syslog
+#### （2）相对路径
+以当前工作目录为起点，只写相对于当前文件夹的路径，换个目录后路径会失效。
+> 常用符号：
+./ 当前目录（可省略）
+./img/1.jpg 等价于 img/1.jpg
+../ 上一级目录
+../data/log.txt 代表当前文件夹的上一级里的 data 文件夹
+../../ 往上两级目录
+
+==举例==
+当前目录：C:\Users\test
+相对路径 note.txt → 完整等价 C:\Users\test\note.txt
+相对路径 ../download/a.pdf → 完整等价C:\Users\download\a.   
+### 2.文件操作
+#### 步骤：
+##### （1）打开文件：open() 获取文件对象
+`open("./data.txt"，"r",encoding="utf-8")`
+`open("/user/demo/data.txt")`
+( )里第一个参数是路径；
+第二个参数是模式,模式是一个字符串；
+第三个参数是可选参数encoding，表示编码方式，
+> "r"读取模式（只读）<不写第二个参数时默认为只读模式>
+> "w"写入模式（只写）
+##### (2)读写文件：read() / write() / readline() 等操作
+`print(f.read())`
+<u>文件内存很大时最好不要用read</u>
+`print(f.read(10)) # 会读第1-10个字节的文件内容`
+再次调用时，会在上次读的基础上继续往下读
+`print(f.readline()) # 会读文件一行内容并打印`
+**readline方法**：
+```
+f=open("./data.txt","r",encoding="utf-8")
+line=f.readline() # 读第一行
+while line != "": # 判断当前行是否为空
+    print(f.readline()) # 不为空则打印当前行
+    line=f.readline() # 读取下一行
+```
+**readlines方法**：
+```
+f=open("./data.txt","r",encoding="utf-8")
+lines=f.readlines() # 把每行内容储存到列表里
+for line in lines # 遍历每行内容
+    print(line) # 打印当前行
+```
+==概念辨析==
+read：返回全部文件内容的字符串
+readline：返回一行文件内容的字符串
+readlines：返回全部文件内容组成的列表    
+
+##### (3)处理数据：解析、修改、拼接内容
+##### (4)关闭文件：close() 释放资源（必须做，否则占用内存）/with 语句（自动关闭，不用手动 close）
++ 使用 with open(...) as f: 打开文件
++ 缩进内执行读写操作
++ 代码块结束自动关闭文件，无需手动 close()
+```
+with open("test.txt", "r", encoding="utf-8") as f:
+    content = f.read()  # 读写操作
+print("文件读取完成")
+```
