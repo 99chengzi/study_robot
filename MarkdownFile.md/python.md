@@ -388,11 +388,13 @@ D:\code\main.py
 第三个参数是可选参数encoding，表示编码方式，
 > "r"读取模式（只读）<不写第二个参数时默认为只读模式>
 > "w"写入模式（只写）
+> "a"附加模式
+> "r+"可以同时支持读写文件
 ##### (2)读写文件：read() / write() / readline() 等操作
 `print(f.read())`
 <u>文件内存很大时最好不要用read</u>
 `print(f.read(10)) # 会读第1-10个字节的文件内容`
-再次调用时，会在上次读的基础上继续往下读
+再次调用时，会在上次读的基础上继续往下读,会默认换行
 `print(f.readline()) # 会读文件一行内容并打印`
 **readline方法**：
 ```
@@ -424,3 +426,75 @@ with open("test.txt", "r", encoding="utf-8") as f:
     content = f.read()  # 读写操作
     print("文件读取完成")
 ```
+f.write()再次调用时不会默认换行，需要手动输入换行符
+> ==ex==
+> f.write("hello!\n")
+```
+with open("MarkdownFile.md/poem.txt","w",encoding="utf-8")as f:
+    f.write("我欲乘风归去,\n")
+    f.write("又恐琼楼玉宇，\n")
+    f.write("高处不胜寒。\n")
+with open("MarkdownFile.md/poem.txt","a",encoding="utf-8")as f:
+    f.write("起舞弄清影,\n")
+    f.write("何似在人间。")
+```
+## 十六. python异常处理
+> **异常类型:**
+> 用长度范围之外的索引对列表取值时：IndexError==索引错误==
+> 用数字除0时：ZeroDivisionError==除零错误==
+> 打开的文件不存在时：FileNotFoundError==找不到文件错误==
+> 让两个字符串做乘法：TypeError==类型错误==
+
+<center>IndentationError 缩进错误   
+
+ImportError 导入模块错误
+ArithmeticError 计算错误
+SyntaxError 语法错误
+AttributeError 属性错误
+ValueError 值错误
+KeyError 键错误......
+</center>
+
+**可以通过try/except类型去捕捉日常**
+```
+try:
+    user_weight=float(input("请输入您的体重(单位:kg):"))user_height=float(input("请输入您的身高(单位:m):"))
+    user_BMI = user_weight / user_height ** 2
+except ValueError:
+    print("输入不为合理数字，请重新运行程序，并输入正确的数字。")
+```
+```
+except:
+    print("发生了未知错误，请重新运行程序。")
+```
+> 这个语句会捕捉所有的错误类型
+
+**except语句：只有第一个符合条件的分支会运行**
+## 十七. python测试
+#### 1. **assert语句:**
+assert（断言）后面可以跟上任何<u>布尔表达式</u>
+True：无事发生
+False：AssertionError断言错误
+***
+**unittest**就是一个很常用的Python单元测试库
+单元测试：对软件中的最小可测试单元进行验证
+> from 文件名 import 类名/函数名
+
+#### 2. unittest.TestCase 常见测试方法
+|        方法         |      类似于       |
+| :----------------: | :---------------: |
+| assertEqual(A, B)  |   assert A == B   |
+|    assertTrue(A)   | assert A is True  |
+|    assertIn(A, B)  |   assert A in B   |
+| assertNotEqual(A,B)|   assert A != B   |
+|   assertFalse(A)   | assert A is False |
+|  assertNotIn(A, B) | assert A not in B |
+
+#### 3. 高阶函数：把函数作为参数的函数
+作为参数的函数，是直接用函数名进行传入，即函数本身；如果加了括号就是函数调用后返回的结果
+**匿名函数**：
+`calculate_and_print(7, lambda num: num*5,print_with_vertical_bar)`
+冒号前的变量名表示的是传给匿名函数的参数，匿名函数不需要专门写return，冒号后面直接放上要返回的结果。
+如果要给匿名函数增加参数，只需要在lambda关键字后面把参数用不同逗号分隔开。
+> 匿名函数能减少代码行数，不用起名字，不用换行缩进
+> 局限性：冒号后面只能有一个语句/表达式

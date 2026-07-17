@@ -63,3 +63,9 @@ git commit -m "补充忽略规则，屏蔽text目录"
 之后 .gitignore 文件会一直留在本地，但 Git 不会识别它为待提交文件，push 时不会上传到 GitHub
 ##### 最终效果:
 提交完成后，VS Code 左侧源代码管理就不会再弹出 text 文件夹的 U 标记，以后在 text 里新建 / 修改任何文件，Git 都会自动无视，不会干扰你上传笔记到 GitHub。
+
+#### 解决找到.gitignore所忽略而不显示文件的方法：
+.gitignore 本身不会删除电脑里的文件夹，你看不到 text 文件夹，是 VS Code 自动隐藏了被忽略的文件，不是文件真的消失了；本地文件完好无损，只是编辑器不显示。
+![alt text](image-9.png)
+![alt text](image-10.png)
+取消勾选即可
