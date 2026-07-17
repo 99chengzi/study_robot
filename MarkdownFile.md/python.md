@@ -422,5 +422,5 @@ readlines：返回全部文件内容组成的列表
 ```
 with open("test.txt", "r", encoding="utf-8") as f:
     content = f.read()  # 读写操作
-print("文件读取完成")
+    print("文件读取完成")
 ```
