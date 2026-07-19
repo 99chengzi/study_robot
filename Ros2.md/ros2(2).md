@@ -112,3 +112,95 @@ $ ros2 node info <node_name>   # 查看节点信息
 3. 查看话题信息
 `ros2 topic info /learn_topic`
 可查看该话题的消息类型以及发布者/订阅者数量。
+**解决Package 'learn_topic' not found 问题**
+1.确认包存在
+`ls ~/dev_ws/src`
+2.回到工作空间根目录
+`cd ~/dev_ws`
+3.删除旧编译垃圾
+`rm -rf build install log`
+4.编译learn_topic
+`colcon build --packages-select learn_topic`
+5.刷新环境
+`source install/setup.bash`
+6.验证包
+`ros2 pkg list | grep learn_topic`
+7.启动发布节点
+`ros2 run learn_topic publisher`
+## 五. 服务
+### 1. 如果我们想要实现一个客户端，流程如下：
++ 编程接口初始化
++ 创建节点并初始化
++ 创建客户端对象
++ 创建并发送请求数据
++ 等待服务器端应答数据
++ 销毁节点并关闭接口
+### 2. 如果我们想要实现一个服务端，流程如下：
++ 编程接口初始化
++ 创建节点并初始化
++ 创建服务器端对象
++ 通过回调函数处进行服务
++ 向客户端反馈应答结果
++ 销毁节点并关闭接口
+**ROS2 Python 功能包新建 service_client.py 完整步骤:**
+1. 先 cd 进入代码文件夹
+`cd ~/你的工作空间名/src/learn_service/learn_service`
+==ex.==`cd ~/dev_ws/src/learn_service/learn_service`
+2. 创建空白文件
+`touch service_client.py`
+3. 打开编写代码
+用 VS Code：`code service_client.py`
+4. 重新编译更新代码
+`cd ~/dev_ws
+rm -rf build install log
+colcon build --packages-select learn_service
+source install/setup.bash`
+5. 分两个终端运行
++ 终端 1（先开服务端，保持不关闭）
+`ros2 run learn_service service_adder_server`
++ 终端 2（客户端，带两个数字参数）
+`ros2 run learn_service service_adder_client 10 20`
+### 3. 使用命令行工具验证服务通信
+1. 查看当前服务列表
+`ros2 service list`
+2. 查看服务类型
+`ros2 service type /add_two_ints`
+3. 直接通过命令行调用服务
+本质是通过命令行模拟了一个客户端：
+```
+# 格式 ros2 service call 服务名 数据接口 "{字典形式表示的请求数据}"
+ros2 service call /add_two_ints example_interfaces/srv/AddTwoInts "{a: 4, b: 5}"
+```
+## 六. 通信接口
+![alt text](image-4.png)
+![alt text](image-5.png)
+```
+bool get      # 获取目标位置的指令
+---
+int32 x       # 目标的X坐标
+int32 y       # 目标的Y坐标
+```
+### 1. 什么是接口
+在 ROS 2 中，接口（Interface）是节点之间通信的"数据契约"。它定义了数据的结构和类型，确保不同节点之间能够正确理解和处理数据。
+##### ROS2 提供了三种主要接口类型：
++ ==消息（msg）==
+用于话题通信
+单向、持续的数据流
++ ==服务（srv）==
+用于服务通信
+请求-响应模式
++ ==动作（action）==
+用于动作通信
+可反馈的长时间任务
+### 2.使用命令行工具验证
+1. 查看话题列表
+`ros2 topic list`
+2. 查看话题信息
+`ros2 topic info /student_info`
+3. 手动发布消息
+`ros2 topic pub /student_info student_interfaces/msg/Student "{name: '测试', age: 22, height: 170.0, grade: '一年级', is_graduated: false}"`
+4. 查看服务列表
+`ros2 service list`
+5. 手动调用服务
+`ros2 service call /get_student_info student_interfaces/srv/StudentInfo "{student_id: '002'}"`
+## 七. 动作
