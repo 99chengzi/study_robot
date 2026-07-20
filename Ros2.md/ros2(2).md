@@ -204,3 +204,103 @@ int32 y       # 目标的Y坐标
 5. 手动调用服务
 `ros2 service call /get_student_info student_interfaces/srv/StudentInfo "{student_id: '002'}"`
 ## 七. 动作
+动作（Action）是一种用于执行长时间运行任务的通信机制。它结合了话题和服务的特点，提供了一种更灵活的异步通信方式。
+> 动作的核心特点
++ 目标（Goal）：
+客户端发送的任务目标
++ 反馈（Feedback）：
+服务端定期发送的任务进度信息
++ 结果（Result）：
+任务完成后返回的最终结果
+![alt text](image-6.png)
+### 1.action 文件结构
+动作接口通过 .action 文件定义，包含三个部分：
++ 目标（Goal）部分 - 客户端发送给服务端的请求数据
+`int64 target_count`
+---
++ 结果（Result）部分 - 任务完成后返回的数据
+```
+int64 final_count
+bool success
+string message
+```
+---
++ 反馈（Feedback）部分 - 任务执行过程中的进度信息
+```
+int64 current_count
+float64 progress
+```
+.action 文件使用 --- 分隔符来区分三个部分：
+
+第一部分（Goal）：定义目标请求数据
+第二部分（Result）：定义最终结果数据
+第三部分（Feedback）：定义实时反馈数据
+### 2.使用命令行工具验证 Action
+1. 查看动作列表
+`ros2 action list`
+2. 查看动作信息
+`ros2 action info /countdown`
+3. 通过命令行发送动作目标
+```
+# 格式: ros2 action send_goal 动作名 动作类型 "{目标数据}"
+ros2 action send_goal /countdown action_interfaces/action/Countdown "{target_number: 3}"
+```
+添加 --feedback 参数可以查看反馈信息：
+```
+ros2 action send_goal /countdown action_interfaces/action/Countdown "{target_number: 3}" --feedback
+```
+#### 动作通信的关键要点
++ 服务端通过 ActionServer 创建，处理目标和发送反馈
++ 客户端通过 ActionClient 创建，发送目标和接收结果
++ 使用 ReentrantCallbackGroup 防止回调阻塞
+#### 动作与服务的选择
+
+| 场景                 | 推荐方式 | 原因                         |
+| :------------------- | :------: | :--------------------------- |
+| 快速查询/计算（毫秒级） |   服务   | 一次请求-响应即可完成        |
+| 长时间任务（秒级以上） |   动作   | 需要进度反馈和取消能力       |
+| 需要实时监控进度      |   动作   | 支持持续反馈机制             |
+| 需要中断执行          |   动作   | 支持目标取消功能             |
+## 八. 参数
+### 1.常用操作
+1. 查看参数列表
+`$ ros2 param list`
+2. 参数查询与修改
+```
+$ ros2 param describe turtlesim background_b   # 查看某个参数的描述信息
+$ ros2 param get turtlesim background_b        # 查询某个参数的值
+$ ros2 param set turtlesim background_b 10     # 修改某个参数的值
+```
+>使用 ros2 param set 设置参数值时，节点必须正在运行。该命令会立即修改运行中节点的参数值，但不会持久化保存。节点重启后参数将恢复为代码中的默认值或启动时指定的值。
+3. 参数文件保存与加载
+一个一个查询/修改参数太麻烦了，不如试一试参数文件，ROS中的参数文件使用yaml格式
+```
+$ ros2 param dump turtlesim >> turtlesim.yaml  # 将某个节点的参数保存到参数文件中
+$ ros2 param load turtlesim turtlesim.yaml     # 一次性加载某一个文件中的所有参数
+```
+4. ros2 param delete - 删除参数
+```
+# 删除指定参数（仅对动态声明的参数有效）
+ros2 param delete /countdown_action_server temp_parameter
+```
+>参数删除限制
+在代码中使用 declare_parameter() 声明的参数是静态参数，通常无法通过 ros2 param delete 删除。只有通过代码动态添加的参数才可以被删除。
+### 2.YAML 配置文件批量赋值
+1. 创建 YAML 配置文件
+    1.回到功能包根目录
+    ` cd ~/dev_ws/src/learn_action`
+    2.创建config文件夹
+    `mkdir config`
+    3.创建yaml 文件
+    `touch config/params.yaml`
+2. 使用 YAML 文件启动节点
+    `ros2 run learn_action countdown_server --ros-args --params-file config/params.yaml`
+## 九. DDS
+DDS的全称是Data Distribution Service，也就是数据分发服务.DDS强调以数据为中心，可以提供丰富的服务质量策略，以保障数据进行实时、高效、灵活地分发，可满足各种分布式实时通信应用需求。
+### 1.在命令行中配置DDS
+启动第一个终端，我们使用best_effort创建一个发布者节点，循环发布任意数据
+`$ ros2 topic pub /chatter std_msgs/msg/Int32 "data: 42" --qos-reliability best_effort `
+在另外一个终端中,同样的best_effort，才能实现数据传输。
+`$ ros2 topic echo /chatter --qos-reliability best_effort`
+如何去查看ROS2系统中每一个发布者或者订阅者的QoS策略呢，在topic命令后边跟一个"--verbose"参数就行了。
+`$ ros2 topic info /chatter --verbose`
