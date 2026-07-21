@@ -286,6 +286,7 @@ ros2 param delete /countdown_action_server temp_parameter
 >参数删除限制
 在代码中使用 declare_parameter() 声明的参数是静态参数，通常无法通过 ros2 param delete 删除。只有通过代码动态添加的参数才可以被删除。
 ### 2.YAML 配置文件批量赋值
+当参数较多时，使用 YAML 配置文件进行批量管理更加方便。
 1. 创建 YAML 配置文件
     1.回到功能包根目录
     ` cd ~/dev_ws/src/learn_action`
