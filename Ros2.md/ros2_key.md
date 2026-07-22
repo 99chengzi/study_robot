@@ -34,3 +34,5 @@ mkdir launch
 ```
 ## 5.安装系统依赖库：
 `sudo apt install`
+
+==ctrl+shift+5==可以在VS code原有终端的基础上再新开一个终端
