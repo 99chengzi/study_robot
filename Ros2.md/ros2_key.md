@@ -36,3 +36,11 @@ mkdir launch
 `sudo apt install`
 
 ==ctrl+shift+5==可以在VS code原有终端的基础上再新开一个终端
+
+---
+
+# 如何用codex管理一个长期项目？
+## 1.新建project
+## 2.需要Agents.md
+每次进入对话，AI会忘记之前的内容，所以需要让它初始化一个Agents.md
+可以让AI扫描我的代码仓库写一个Agents.md，里面包括：项目定位、工作方式、重要文件......
